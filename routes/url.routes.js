@@ -5,4 +5,5 @@ const {handleGenerateNewShortURL,handleRedirectURL}=require('../controllers/url.
 router.post('/',handleGenerateNewShortURL);
 router.get('/:shortId',handleRedirectURL);
 
+
 module.exports=router;
