@@ -10,23 +10,26 @@ async function handleGenerateNewShortURL(req,res){
         shortId:shortId,
         redirectUrl:body.url,
         visitHistory:[],
+        createdBy:req.user._id,
     })
-    // res.status(201).json({message:"success",entry});
-    return res.render('home',{
-        id:shortId
-    })
+    console.log("entry in generate",entry);
+    res.redirect('/');
+    // return res.render('home',{
+    //     id:shortId
+    // })
 }
 
 async function handleRedirectURL(req,res){
     const shortId=req.params.shortId;
+    const entry=await URL.findOne({shortId});
+    if(!entry) return res.status(404).json({message:"Not found"});
+
+    await URL.updateOne({shortId},{
+        $push:{visitHistory:{timestamp:Date.now()}}}
+    )
+    const redirectURL=entry.redirectUrl;
     
-    const entry=await URL.findOneAndUpdate({
-        shortId
-    },{$push: {
-        visitHistory:{timestamp:Date.now()}
-    }})
-    
-    res.redirect(entry.redirectUrl);
+    res.redirect(redirectURL);
 
 }
 
