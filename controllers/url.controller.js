@@ -30,7 +30,7 @@ async function handleRedirectURL(req,res){
     const redirectURL=entry.redirectUrl;
     
     res.redirect(redirectURL);
-
+    
 }
 
 module.exports={

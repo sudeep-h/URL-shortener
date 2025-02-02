@@ -15,13 +15,13 @@
     <% if (locals.id) { %>
      <p>URL Generated: http://localhost:8000/api/url/<%= id %></p>
     <% } %>
-    <div>
+    <!-- <div>
         <form method="POST" action="/api/url">
             <label for="url">Enter the original website</label>
             <input type="text" id="url" name="url" placeholder="https://www.example.com">
             <button type="submit">Generate</button>
         </form>
-    </div>
+    </div> -->
 
     <div>
         <% if (locals.urls) { %>
@@ -31,7 +31,7 @@
                 <th>ShortId</th>
                 <th>Redirect</th>
                 <th>Clicks</th>
-                
+                <th>Created By</th>
             </thead>
             <tbody>
                 
@@ -41,6 +41,7 @@
       <td><%= url.shortId %></td>
       <td><%= url.redirectUrl %></td>
       <td><%= url.visitHistory.length %></td>
+      <td><%= url.username %></td>
     </tr>
      <% }) %>       
     </tbody>

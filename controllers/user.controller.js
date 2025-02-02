@@ -1,6 +1,5 @@
 const User=require('../models/user.model');
-const {setUser,getUser} =require('../middlewares/auth');
-const cookieParser=require('cookie-parser');
+const {setUser} =require('../service/auth');
 
 async function handleSingup(req,res){
     const {username,email,password} = req.body;
@@ -28,7 +27,7 @@ async function handleLogin(req,res){
     }else{
         if(email== existingUser.email && password==existingUser.password){
             const token=setUser(existingUser);
-            res.cookie("uid",token);
+            res.cookie("token",token);
             return res.redirect("/");
         }else{
             return res.status(400).json({message:"Incorrect email or password"});
@@ -36,18 +35,8 @@ async function handleLogin(req,res){
     }
 }
 
-async function handleFindUserById(req,res){
-    const _id=req.params.id;
-    const user=await User.findById({_id});
-    if(!user){
-        return res.status(404).json({message:"User not found"});
-    }else{
-        return res.status(200).json({"user":user});
-    }
-}
 
 module.exports={
     handleSingup,
-    handleLogin,
-    handleFindUserById
+    handleLogin
 }
